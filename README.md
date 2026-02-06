@@ -206,11 +206,25 @@ Du kan kika in och ta ut saker, men du måste följa vissa regler.
 public class Bil
 {
     private int hastighet; // Privat fält, låst inne i rummet
+    private string märke;
+    private int årsmodell;
 
     public int Hastighet   // Egenskap, ett kontrollerat fönster
     {
-        get { return hastighet; }. 
+        get { return hastighet; }
         set { hastighet = value; }
+    }
+
+    public string Märke
+    {
+        get { return märke; }
+        set { märke = value; }
+    }
+
+    public int Årsmodell
+    {
+        get { return årsmodell; }
+        set { årsmodell = value; }
     }
 }
 ```
