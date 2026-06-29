@@ -14,6 +14,7 @@
   - [🪟 EGENSKAPER =  Fönster till objektets data](#-egenskaper---fönster-till-objektets-data)
   - [🔀 EGENSKAP vs METOD = INSTÄLLNING ELLER HANDLING?](#-egenskap-vs-metod--inställning-eller-handling)
   - [🧬 ARV = BARN SOM ÄRVER FRÅN FÖRÄLDRAR](#-arv--barn-som-ärver-från-föräldrar)
+  - [🎭 VIRTUAL & OVERRIDE = SKRIVA OM ÄRVDA METODER](#-virtual--override--skriva-om-ärvda-metoder)
   - [🚪 Main() = STADENS HUVUDENTRÉ](#-main--stadens-huvudentré)
   - [🅿️ LISTOR = PARKERINGAR](#️-listor--parkeringar)
   - [🔁 LOOPAR = ROBOTAR SOM JOBBAR OM OCH OM IGEN](#-loopar--robotar-som-jobbar-om-och-om-igen)
@@ -27,6 +28,7 @@
   - [🏷️ VIKTIGA NYCKELORD OCH TERMER](#️-viktiga-nyckelord-och-termer)
     - [`public` – Öppet för alla 🔓](#public--öppet-för-alla-)
     - [`private` – Privat och låst 🔒](#private--privat-och-låst-)
+    - [`protected` – Låst, men öppet för barnen 🔐](#protected--låst-men-öppet-för-barnen-)
     - [`static` – Tillhör blueprinten, inte objektet 🏗️](#static--tillhör-blueprinten-inte-objektet-️)
     - [`namespace` – Stadsdelar 🏘️](#namespace--stadsdelar-️)
     - [`void` – Returnerar ingenting 🚫📦](#void--returnerar-ingenting-)
@@ -342,6 +344,107 @@ class Spaghetti : Pasta
 
 ---
 
+## 🎭 VIRTUAL & OVERRIDE = SKRIVA OM ÄRVDA METODER
+Ibland vill barnet (subklassen) inte göra exakt som föräldern (basklassen), barnet vill ha sin egen variant men ändå kalla den samma sak. Det är vad `virtual` och `override` löser tillsammans.
+
+* `virtual` sätts på metoden i föräldern (basklassen), det är förälderns sätt att säga "den här metoden FÅR skrivas över av barn".
+* `override` sätts på barnets (subklassens) version av samma metod, det är barnets sätt att säga "jag skriver över den ärvda metoden med min egen".
+
+```csharp
+class Pasta // Basklassen (föräldern)
+{
+    public virtual void Beskriv()
+    {
+        Console.WriteLine("Jag är pasta.");
+    }
+}
+
+class Spaghetti : Pasta // Subklassen (barnet)
+{
+    public override void Beskriv()
+    {
+        Console.WriteLine("Jag är spaghetti, lång och smal!");
+    }
+}
+```
+
+Det coola händer när du pratar med objektet genom förälderns typ:
+```csharp
+Pasta pasta = new Spaghetti();
+pasta.Beskriv(); // Skriver ut "Jag är spaghetti, lång och smal!"
+```
+
+Trots att `pasta` är deklarerad som `Pasta` (basklassen) körs barnets (subklassens) `Beskriv()`, C# kommer ihåg vilket riktigt objekt det handlar om. Det kallas polymorfism.
+
+**`base.Metod()` = ring upp förälderns version inifrån barnet**
+
+Lathunden har redan `base()` för konstruktorn, den anropar förälderns (basklassens) konstruktor innan barnets (subklassens) egen kod körs. `base.Metod()` är samma idé, men för vanliga metoder: barnet kan anropa förälderns version och sedan bygga vidare på den med sin egen kod.
+
+```csharp
+class Spaghetti : Pasta
+{
+    public override void Beskriv()
+    {
+        base.Beskriv(); // Kör förälderns variant först
+        Console.WriteLine("...men jag är lång och smal!");
+    }
+}
+```
+
+**`abstract` = ofullständig blueprint som MÅSTE kompletteras**
+
+`abstract` är som `virtual`, men utan någon standardvariant alls. Föräldern (basklassen) säger inte "du FÅR skriva över den här", den säger "jag ger dig ingen implementation, du MÅSTE skriva din egen med `override`".
+
+* `virtual` = föräldern ger en fungerande standardvariant, barnet FÅR skriva över den.
+* `abstract` = föräldern ger ingen variant alls, bara en signatur, barnet (subklassen) MÅSTE skriva över den.
+
+En klass med en `abstract`-metod måste själv vara markerad `abstract`, och en sådan klass kan du aldrig bygga direkt med `new`, det är en ofullständig blueprint.
+
+```csharp
+abstract class Fordon // Basklassen (föräldern), ofullständig med avsikt
+{
+    public abstract void Starta(); // Ingen kropp, ingen standardvariant
+}
+
+class Bil : Fordon // Subklassen (barnet) som kompletterar blueprinten
+{
+    public override void Starta()
+    {
+        Console.WriteLine("Bilen startar med en nyckel.");
+    }
+}
+```
+
+```csharp
+Fordon f = new Fordon(); // FEL! Fordon är en ofullständig blueprint
+Bil bil = new Bil();     // OK, Bil har kompletterat blueprinten
+bil.Starta();
+```
+
+**`new` har en till betydelse: dölja en ärvd metod**
+
+Vi har redan sett `new` användas för att skapa ett objekt (`new Bil()`). Men samma ord kan också sättas på en metod i barnet (subklassen), då betyder det något helt annat: att DÖLJA förälderns metod istället för att skriva över den med `override`.
+
+```csharp
+class Spaghetti : Pasta
+{
+    public new void Beskriv()
+    {
+        Console.WriteLine("Jag har min egen Beskriv(), helt fristående från förälderns.");
+    }
+}
+```
+
+Skillnaden märks om du kommer åt objektet via förälderns typ: med `override` körs barnets variant (som i exemplet ovan), med `new` körs fortfarande förälderns variant. Samma ord, `new`, men två helt olika roller, skapa ett nytt objekt eller dölja en ärvd metod.
+
+**Den stora skillnaden:**
+* Åtkomstmodifierare (`public`/`private`/`protected`) svarar på frågan: VEM får se?
+* Beteendenyckelord (`virtual`/`override`/`abstract`) svarar på frågan: VAD kan man göra?
+
+De ser likadana ut, ord skrivna direkt före en metod, men de hör till helt olika kategorier.
+
+---
+
 ## 🚪 Main() = STADENS HUVUDENTRÉ
 Programmet börjar alltid här.
 ```csharp
@@ -504,6 +607,25 @@ private int hemligKod; // Bara denna klass kan använda hemligKod
 
 **Tänk så här:** `public` = öppen dörr, `private` = låst rum. Om du inte skriver något alls framför så är det `private` som standard i C#.
 
+### `protected` – Låst, men öppet för barnen 🔐
+Som `private`, men barn (subklasser) som ärver klassen får också se och använda medlemmen. Ett mellanting mellan `public` och `private`.
+```csharp
+class Pasta // Basklassen (föräldern)
+{
+    protected string Form; // Bara Pasta och dess barn kommer åt detta
+}
+
+class Spaghetti : Pasta // Subklassen (barnet)
+{
+    public void VisaForm()
+    {
+        Console.WriteLine(Form); // Funkar, Spaghetti är ett barn till Pasta
+    }
+}
+```
+
+**Tänk så här:** `protected` är ett familjerum, låst för utomstående men öppet för alla barn (subklasser) i familjen.
+
 ### `static` – Tillhör blueprinten, inte objektet 🏗️
 Normalt tillhör variabler och metoder ett specifikt objekt. Men `static` betyder att det tillhör **klassen själv**, du behöver inte skapa ett objekt för att använda det.
 ```csharp
@@ -573,10 +695,16 @@ Bil minBil = new Bil(); // Skapar ett nytt Bil-objekt
 |-----------|-----------|----------|
 | `public` | Tillgängligt överallt | 🔓 Öppen dörr |
 | `private` | Bara tillgängligt i egen klass | 🔒 Låst rum |
+| `protected` | Tillgängligt i egen klass och barnklasser | 🔐 Familjerum |
 | `static` | Tillhör klassen, inte objektet | 🏗️ Gemensam för alla |
 | `namespace` | Grupp av klasser | 🏘️ Stadsdel |
 | `void` | Returnerar inget värde | 🚫📦 Tomt paket |
 | `new` | Skapar nytt objekt | 🆕 Bygg från blueprint |
+| `virtual` | Tillåter att barn skriver över metoden | 🎭 Öppen roll |
+| `override` | Skriver över en ärvd metod med sin egen variant | 🖊️ Ny tolkning |
+| `abstract` | Ingen standardvariant, barnet måste skriva sin egen | 🚧 Ofullständig blueprint |
+| `base.Metod()` | Anropar förälderns version av metoden | 👨‍👩‍👧 Ring föräldern |
+| `new` (dölj) | Döljer en ärvd metod istället för att skriva över den | 🆕 Egen skylt, samma namn |
 
 ---
 
