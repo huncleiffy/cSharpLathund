@@ -12,6 +12,7 @@
     - [Metoder med parametrar](#metoder-med-parametrar)
     - [Metoder som returnerar värden](#metoder-som-returnerar-värden)
   - [🪟 EGENSKAPER =  Fönster till objektets data](#-egenskaper---fönster-till-objektets-data)
+  - [🔀 EGENSKAP vs METOD = INSTÄLLNING ELLER HANDLING?](#-egenskap-vs-metod--inställning-eller-handling)
   - [🧬 ARV = BARN SOM ÄRVER FRÅN FÖRÄLDRAR](#-arv--barn-som-ärver-från-föräldrar)
   - [🚪 Main() = STADENS HUVUDENTRÉ](#-main--stadens-huvudentré)
   - [🅿️ LISTOR = PARKERINGAR](#️-listor--parkeringar)
@@ -265,6 +266,37 @@ public class Bil
 ```
 
 Nu kan du inte ge bilen en negativ hastighet — egenskapen vaktar vid dörren! 🛂
+
+---
+
+## 🔀 EGENSKAP vs METOD = INSTÄLLNING ELLER HANDLING?
+Det här är lätt att blanda ihop — men det finns ett knep som alltid funkar: **titta efter parenteserna.**
+
+* **Egenskap** = en *inställning* på objektet. Du läser av den eller sätter den. **Inga parenteser.**
+* **Metod** = något objektet *gör*, en handling. **Alltid parenteser** `()` — även när de är tomma.
+
+```csharp
+numericUpDown1.Enabled = false;   // EGENSKAP – sätter en inställning (av/på). Inget ()
+numericUpDown1.Focus();           // METOD    – utför en handling (ge fokus). Har ()
+```
+
+Tänk på det som skillnaden mellan ett **reglage** och en **knapp**:
+* Egenskapen är reglaget 🎚️ — du vrider det till ett läge (`= false`) och det stannar kvar där.
+* Metoden är knappen 🔘 — du trycker (`()`) och något händer direkt.
+
+Samma sak med `Bil` från tidigare i stan:
+```csharp
+bil.Hastighet = 50;   // EGENSKAP – ställer in ett värde
+bil.Kör();            // METOD    – utför en handling
+```
+
+**Snabbtest:** Ser du `=` och inget `()` → egenskap. Ser du `()` → metod.
+
+| | 🎚️ Egenskap | 🔘 Metod |
+|---|---|---|
+| Vad den är | En inställning / ett värde | En handling |
+| Parenteser? | Nej | Ja `()` |
+| Exempel | `bil.Hastighet = 50;` | `bil.Kör();` |
 
 ---
 
