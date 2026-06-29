@@ -111,7 +111,7 @@ minBil.RegistreringsNummer = "ABC123";
 ```
 
 **Tänk så här:**
-* Konstruktorn är som ett **startpaket** 🎁 — den ser till att varje ny bil som byggs redan har tillverkare och registreringsnummer från start.
+* Konstruktorn är som ett **startpaket** 🎁, den ser till att varje ny bil som byggs redan har tillverkare och registreringsnummer från start.
 * Utan konstruktor är bilen tom när den skapas och du måste fylla i allt själv efteråt.
 
 ### Flera konstruktorer
@@ -241,9 +241,9 @@ Console.WriteLine($"Min bil är en {minBil.Märke} från {minBil.Årsmodell}");
 ```
 
 **Varför egenskaper?**
-* Du kan lägga in logik — t.ex. hindra negativa värden
+* Du kan lägga in logik, t.ex. hindra negativa värden
 * Du kan göra data skrivskyddat med bara `get` 🔒
-* Det är standard i C# — de flesta klasser använder det
+* Det är standard i C#, de flesta klasser använder det
 
 **Exempel med kontroll:**
 ```csharp
@@ -265,15 +265,15 @@ public class Bil
 }
 ```
 
-Nu kan du inte ge bilen en negativ hastighet — egenskapen vaktar vid dörren! 🛂
+Nu kan du inte ge bilen en negativ hastighet, egenskapen vaktar vid dörren! 🛂
 
 ---
 
 ## 🔀 EGENSKAP vs METOD = INSTÄLLNING ELLER HANDLING?
-Det här är lätt att blanda ihop — men det finns ett knep som alltid funkar: **titta efter parenteserna.**
+Det här är lätt att blanda ihop, men det finns ett knep som alltid funkar: **titta efter parenteserna.**
 
 * **Egenskap** = en *inställning* på objektet. Du läser av den eller sätter den. **Inga parenteser.**
-* **Metod** = något objektet *gör*, en handling. **Alltid parenteser** `()` — även när de är tomma.
+* **Metod** = något objektet *gör*, en handling. **Alltid parenteser** `()`, även när de är tomma.
 
 ```csharp
 numericUpDown1.Enabled = false;   // EGENSKAP – sätter en inställning (av/på). Inget ()
@@ -281,8 +281,8 @@ numericUpDown1.Focus();           // METOD    – utför en handling (ge fokus).
 ```
 
 Tänk på det som skillnaden mellan ett **reglage** och en **knapp**:
-* Egenskapen är reglaget 🎚️ — du vrider det till ett läge (`= false`) och det stannar kvar där.
-* Metoden är knappen 🔘 — du trycker (`()`) och något händer direkt.
+* Egenskapen är reglaget 🎚️, du vrider det till ett läge (`= false`) och det stannar kvar där.
+* Metoden är knappen 🔘, du trycker (`()`) och något händer direkt.
 
 Samma sak med `Bil` från tidigare i stan:
 ```csharp
@@ -505,7 +505,7 @@ private int hemligKod; // Bara denna klass kan använda hemligKod
 **Tänk så här:** `public` = öppen dörr, `private` = låst rum. Om du inte skriver något alls framför så är det `private` som standard i C#.
 
 ### `static` – Tillhör blueprinten, inte objektet 🏗️
-Normalt tillhör variabler och metoder ett specifikt objekt. Men `static` betyder att det tillhör **klassen själv** — du behöver inte skapa ett objekt för att använda det.
+Normalt tillhör variabler och metoder ett specifikt objekt. Men `static` betyder att det tillhör **klassen själv**, du behöver inte skapa ett objekt för att använda det.
 ```csharp
 class Räknare
 {
@@ -523,7 +523,7 @@ Du kommer åt det via klassens namn, inte ett objekt:
 Console.WriteLine(Räknare.AntalBilar);
 ```
 
-**Därför skriver vi `static void Main()`** — Main tillhör själva programmet, inte ett objekt.
+**Därför skriver vi `static void Main()`**, Main tillhör själva programmet, inte ett objekt.
 
 ### `namespace` – Stadsdelar 🏘️
 Ett `namespace` grupperar klasser som hör ihop, precis som stadsdelar i en stad.
@@ -541,7 +541,7 @@ namespace Djur
 }
 ```
 
-**Tänk så här:** `namespace` håller ordning så att klasser med samma namn inte krockar. Det är som att ha en "Bil" i stadsdelen Fordon och en annan "Bil" i stadsdelen Leksaker — de kan heta samma sak utan att blandas ihop.
+**Tänk så här:** `namespace` håller ordning så att klasser med samma namn inte krockar. Det är som att ha en "Bil" i stadsdelen Fordon och en annan "Bil" i stadsdelen Leksaker, de kan heta samma sak utan att blandas ihop.
 
 ### `void` – Returnerar ingenting 🚫📦
 En metod med `void` gör något men skickar inte tillbaka något värde.
